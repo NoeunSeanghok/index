@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #042334;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5rem 0px;
+    }
+    .receipt-container {
+        background-color: #042334;
+        width: 90%;
+        height: 20rem;
+        text-align: center;
+    }
+    .check-icon {
+        width: 150px;
+        height: 150px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px auto;
+        font-size: 40px;
+        color: white;
+    }
+    .status-text {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        
+    }
+    .transaction-card {
+        background-color: #091822;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: left;
+        margin-top: 40px;
+        
+        height: 170%;
+    }
+    .bank-logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 50px;
+    }
+    .bank-logo img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .amount {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #fff;
+    }
+    .info {
+        font-size: 32px;
+        margin-top: 12px;
+        line-height: 1.5;
+    }
+    .divider {
+        border-top: 1px dashed #ccc;
+        margin: 40px 0;
+    }
+    .share-buttons {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 60px;
+    }
+    .share-buttons button {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+    }
+    .confirm-btn {
+        background-color: #E53935;
+        color: white;
+        border: none;
+        padding: 12px;
+        width: 100%;
+        font-size: 48px;
+        border-radius: 20px;
+        margin-top: 10rem;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<div class="receipt-container">
+    <div class="check-icon">✔</div>
+    <div class="status-text">រួចរាល់</div>
+
+    <div class="transaction-card">
+        <div class="bank-logo">
+            <img src="./khqr.png" alt="KHQR">
+            <div>
+                <div class="amount" id="invoicePrice"> KHR</div>
+                <div id="invoiceName"></div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="info">
+            <div>លេខប្រតិបត្តិការ: 40011776305</div>
+            <div>ថ្ងៃប្រតិបត្តិការ: <span id="invoiceDate"></span></div>
+            <div>ទូរស័ព្ទ: Khmer (500 772 202)</div>
+            <div>លេខយោង trnx. ឯកសារ: b1a83042</div>
+            <div>ធនាគារទទួល: Foreign Trade Bank of Cambodia</div>
+            <div>ចំនួនប្រាក់សរុប: <span id="invoiceKHR"></span> KHR</div>
+        </div>
+    </div>
+
+    <div class="share-buttons">
+        <button>📤 ចែករំលែក</button>
+        <button>⬇ ទាញយក</button>
+    </div>
+
+    <button class="confirm-btn">រួចរាល់</button>
+</div>
+
+<script>
+    const price = localStorage.getItem("invoicePrice");
+const name = localStorage.getItem("invoiceName");
+const date = localStorage.getItem("invoiceDate");
+const khrAmount = localStorage.getItem("invoiceKHR");
+
+if (price) {
+    document.getElementById("invoicePrice").textContent = `-${parseFloat(price).toFixed(2)} USD`;
+}
+if (name) {
+    document.getElementById("invoiceName").textContent = name;
+}
+if (date) {
+    // Format date nicely
+    const d = new Date(date);
+    const formattedDate = d.toLocaleDateString('km-KH', { year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById("invoiceDate").textContent = formattedDate;
+}
+if (khrAmount) {
+    document.getElementById("invoiceKHR").textContent = parseInt(khrAmount).toLocaleString();
+}
+
+</script>
+
+</body>
+</html>

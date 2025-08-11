@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABA Mobile UI</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+  }
+
+  /* Header */
+  .header {
+    background-color: #005d84;
+    color: white;
+    padding:10rem 40px 1px;
+    display: flex;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-top: 0px;
+  }
+  .header p{
+    margin: 30px 0px;
+  }
+  
+  
+
+  /* Grid Menu */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    padding: 0px ;
+    background-color: #ffffff;
+    
+  }
+  .grid-item {
+    text-align: center;
+    color: white;
+    padding: 50px ;
+    margin: 0px;
+    background-color: #042b3b;
+    
+  }
+  .material-icons {
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+    margin-bottom: 80px;
+  }
+
+  /* Cards */
+  .card {
+    padding: 59px;
+    font-size: 2rem;
+    color: white;
+  }
+  .card.blue {
+    background-color: #1cbdd4;
+    
+  }
+  .card.red {
+    background-color: #f05454;
+  }
+  .card-title {
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .grid-item .material-icons {
+      font-size: 6rem;
+      margin:10px 10px 20px;
+    }
+    .grid-item span {
+      font-size: 1.3rem;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <img style="width: 2.7rem; color: #ffffff; padding-right: 15px;" src="./menu.png" alt="">
+  ABA <p style="color: #f05454;">' <p style="color: #005d84;">..</p>  </p>  Mobile
+  <div style="padding-left: 10rem;">
+    <img style="width: 5rem;" src="./notification-svgrepo-com (1).png" alt="">
+    <img style="width: 5rem; " src="./call-191-svgrepo-com.png" alt="">
+  </div>
+</div>
+
+<!-- Grid Menu -->
+<div class="grid">
+  <div class="grid-item">
+    <span class="material-icons">account_balance_wallet</span>
+    <span>Accounts</span>
+  </div>
+  <div class="grid-item">
+    <span class="material-icons">credit_card</span>
+    <span>Cards</span>
+  </div>
+  <div class="grid-item">
+    <span class="material-icons">payments</span>
+    <span>Payments</span>
+  </div>
+  <div class="grid-item">
+    <span class="material-icons">note_add</span>
+    <span>New Account</span>
+  </div>
+  <div class="grid-item">
+    <span class="material-icons">atm</span>
+    <span>Cash to ATM</span>
+  </div>
+  <div class="grid-item">
+    <span class="material-icons">sync_alt</span>
+    <span>Transfers</span>
+  </div>
+  <div class="grid-item">
+    <a href="./scaner.html">
+    <span class="material-icons">qr_code_scanner</span>
+    <span style="color: white;">Scan QR</span>
+    </a>
+  </div>
+  <div class="grid-item">
+    <span class="material-icons">account_balance</span>
+    <span>Loans</span>
+  </div>
+  <div class="grid-item">
+    <span class="material-icons">location_on</span>
+    <span>Locator</span>
+  </div>
+</div>
+
+<!-- Quick Transfer -->
+<div class="card blue">
+  <div class="card-title" style="padding: 40px 0px 0px;">Quick Transfer</div>
+  <div style="font-size: 20px; padding: 0px 0px 40px;">Create your templates here to make transfer quicker</div>
+</div>
+
+<!-- Quick Payment -->
+<div class="card red">
+ 
+  <div class="card-title" style="padding: 40px 0px 0px;">Quick Payment</div>
+  <div style="font-size: 20px; padding: 0px 0px 40px;">Paying your bills with templates is faster</div>
+</div>
+
+</body>
+</html>

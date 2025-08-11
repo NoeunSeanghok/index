@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>QR Scanner</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #003f5c; /* ABA dark blue */
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+    }
+
+    /* Video fills center */
+    #video {
+      flex: 1;
+      object-fit: cover;
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+
+    /* Orange scanning frame */
+    .scan-frame {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      height: 500px;
+      transform: translate(-50%, -50%);
+      border: 4px solid transparent;
+      box-sizing: border-box;
+    }
+    .scan-frame::before,
+    .scan-frame::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #ff8c00;
+    }
+    .scan-frame::before {
+      top: 0;
+      left: 0;
+      border-right: none;
+      border-bottom: none;
+    }
+    .scan-frame::after {
+      bottom: 0;
+      right: 0;
+      border-left: none;
+      border-top: none;
+    }
+    .corner-top-right,
+    .corner-bottom-left {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #ff8c00;
+    }
+    .corner-top-right {
+      top: 0;
+      right: 0;
+      border-left: none;
+      border-bottom: none;
+    }
+    .corner-bottom-left {
+      bottom: 0;
+      left: 0;
+      border-right: none;
+      border-top: none;
+    }
+
+    /* Bottom toolbar */
+    .bottom-bar {
+      background: black;
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 14px;
+    }
+    .bottom-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+    }
+    .bottom-btn img {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 4px;
+      filter: brightness(0) invert(1); /* make icons white */
+    }
+
+    /* Payment logos row */
+    .logos {
+      background: white;
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .logos img {
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <video id="video" playsinline></video>
+  
+  <!-- Scanning frame -->
+  <div class="scan-frame">
+    <div class="corner-top-right"></div>
+    <div class="corner-bottom-left"></div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <div class="bottom-btn">
+      <img src="flashlight-icon.svg" alt="flash">
+      <span>ពិល</span>
+    </div>
+    <div class="bottom-btn">
+      <img src="gallery-icon.svg" alt="gallery">
+      <span>ជ្រើស QR</span>
+    </div>
+  </div>
+
+  <!-- Logos -->
+  <div class="logos">
+    <img src="aba-logo.png" alt="ABA">
+    <img src="visa.png" alt="Visa">
+    <img src="mastercard.png" alt="Mastercard">
+    <img src="unionpay.png" alt="UnionPay">
+  </div>
+
+  <canvas id="canvas" style="display:none;"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let scanning = false;
+
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' },
+          audio: false
+        });
+        video.srcObject = stream;
+        await video.play();
+        scanning = true;
+        tick();
+      } catch (err) {
+        alert('Camera error: ' + err.message);
+      }
+    }
+
+    function tick() {
+      if (!scanning) return;
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: 'attemptBoth'
+        });
+      }
+        if (code) {
+  scanning = false;
+  try {
+    // Try to parse QR as JSON
+    let qrData = JSON.parse(code.data);
+    if (qrData.name) {
+      // Redirect to form with name in URL
+      window.location.href = `form.html?name=${encodeURIComponent(qrData.name)}`;
+    } else {
+      alert('No "name" found in QR code.');
+    }
+  } catch (e) {
+    alert('Invalid QR data format.');
+  }
+}
+
+      requestAnimationFrame(tick);
+    }
+
+    startCamera();
+  </script>
+</body>
+</html>

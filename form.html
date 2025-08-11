@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .form-container {
+      background: white;
+      padding: 100px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 3rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 20px;
+      font-weight: bold;
+      font-size: 2rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 40px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 30px;
+    }
+
+    button {
+      width: 100%;
+      padding: 40px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 43px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Product Form</h2>
+    <form>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter product name" required>
+
+      <label for="price">Price</label>
+      <input type="number" id="price" name="price" placeholder="Enter price" required>
+
+      <label for="date">Date</label>
+      <input type="date" id="date" name="date" required>
+
+      <a href="./invoice.html"><button type="submit">Submit</button></a>
+    </form>
+  </div>
+
+  <script>
+  document.getElementById("productForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const price = document.getElementById("price").value;
+    const date = document.getElementById("date").value;
+
+    // Store data
+    localStorage.setItem("invoiceName", name);
+    localStorage.setItem("invoicePrice", price);
+    localStorage.setItem("invoiceDate", date);
+
+    // Convert to KHR (assuming 1 USD = 4030 KHR, you can change this)
+    const khrAmount = price * 4030;
+    localStorage.setItem("invoiceKHR", khrAmount);
+
+    // Redirect
+    window.location.href = "invoice.html";
+});
+
+</script>
+
+
+</body>
+</html>
